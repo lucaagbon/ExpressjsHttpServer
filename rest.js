@@ -54,4 +54,19 @@ async function getapi(url){
     // store in the form of Json
     const data = await response.json(todos);
     console.log(data)
+    if(response){
+        
+        hideloader();
+
+    }
+    show(data)
 }
+
+// calling that async function
+getapi(apiUrl);
+
+// function to hide loader
+function hideloader(){
+    document.getElementById('loading').style.display="none"
+}
+
