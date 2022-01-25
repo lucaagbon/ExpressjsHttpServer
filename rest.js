@@ -5,8 +5,6 @@ var addButton = document.getElementById('addbutton')
 var itemList = document.getElementById('items')
 const inputData = document.getElementById('hold')
 addButton.addEventListener('click', () => {
-    
-    createTodo()
 });
 // 
 // function addItem(e){
