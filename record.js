@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser')
+// const cors = require('cors');
 
 const port = 6000;
 const app = express();
+// const app = cors();
+
 const foods = [{ id: 1, title: "Mr", name: "John Doe", ocupation: "Carpenter" },
             { id: 1, title: "Mr", name: "Angela Joseng", ocupation: "Trader" },
             { id: 1, title: "Mr", name: "Pauletta Samson", ocupation: "Lawyer" },
@@ -10,9 +13,9 @@ const foods = [{ id: 1, title: "Mr", name: "John Doe", ocupation: "Carpenter" },
     ]
 
     // parsing X-web form
-    // app.use(bodyParser.urlencoded({ extended: false }))
+    app.use(bodyParser.urlencoded({ extended: false }))
     // parsing json
-    app.use(bodyParser.json())
+    // app.use(bodyParser.json())
 
     app.get('/', ( request, response)=>response.status(200).json(foods));
 

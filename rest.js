@@ -1,72 +1,134 @@
-var form = document.getElementById('addbutton');
-var itemList = document.getElementById('items');
+// const { get } = require("express/lib/response")
 
-form.addEventListener('click', addItem);
-// add detele event
-itemList.addEventListener('click', removeItem)
-
-function addItem(e){
-    // e.preventdefault();
-    // console.log(1);
-
-    // add value
-    newItem = document.getElementById('hold').value;
-    console.log(newItem)
+const ulLi = document.getElementById('items')
+var addButton = document.getElementById('addbutton')
+var itemList = document.getElementById('items')
+const inputData = document.getElementById('hold')
+addButton.addEventListener('click', () => {
     
-    // create element li
-    var li = document.createElement('li')
-    // add class
-    li.className ="list-group-item";
+    createTodo()
+});
+// 
+// function addItem(e){
 
-    // add text to li
-    li.appendChild(document.createTextNode(newItem));
+// }
+// // add detele event
+// itemList.addEventListener('click', removeItem)
+
+
+//     const ulLi = document.getElementById('items')
+//     const liArray = [ "", "", "", ""]
     
-    // create element delete button
-    deleteBtn = document.createElement('button');
-    // add class
-    deleteBtn.className = "btn btn-danger float-right delete";
+//     for (let index = 0; index < liArray.length; index++) {
+// let newLi = document.createElement('li')
+// let button = document.createElement('button')
+//     // add list class
+//     newLi.className="list-group-item"
+//     // create textnode
+//     let newLiText = document.createTextNode('item');
+//     // append text
+//     newLi.appendChild(newLiText)
 
-    // append text node to a button
-    deleteBtn.appendChild(document.createTextNode('X'));
-    // append deleteBtn to li
-    li.appendChild(deleteBtn);
-
-    // append li to itemList
-    itemList.appendChild(li);
-}
-
-function removeItem(e){
-   if(e.target.classList.contains('delete')){
-       if(confirm('are you sure?')){
-           var li = e.target.parentElement;
-           itemList.removeChild(li);
-       }
-   }
-}
+//     button.setAttribute('type', "button")
+//     button.className="btn btn-danger btn-sm float-right delete";
+//     // append a textNode to button
+//     buttonText = document.createTextNode("X");
+//     // // append text to button
+//     button.appendChild(buttonText)
+//     //     // append button to li
+//        newLi.appendChild(button)
+//        const getList = ulLi.appendChild(newLi)   
+//     }
 
 
-const apiUrl = "https:localhost:9000";
+    const getTodos = ()=> {
+        const url = "http://localhost:9000";
+    
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            // body: JSON.stringify(todos),
+        }
 
-// defining async function
-async function getapi(url){
-    // storing function
-    const response = await fetch(url);
-    // store in the form of Json
-    const data = await response.json(todos);
-    console.log(data)
-    if(response){
-        
-        hideloader();
+        fetch(url, options)
+        .then(res => res.json())
+        .then((data) => {
 
+            console.log(data, 'data')
+            if(data){
+                
+                for (let index = 0; index < data.length; index++) {
+                    console.log(data.title, 'data3')
+                    let newLi = document.createElement('li')
+                    let button = document.createElement('button')
+                    // add list class
+                    newLi.className="list-group-item"
+                    // create textnode
+                    let newLiText = document.createTextNode(data[index].title);
+                    // append text
+                    newLi.appendChild(newLiText)
+                
+                    button.setAttribute('type', "button")
+                    button.className="btn btn-danger btn-sm float-right delete";
+                    // append a textNode to button
+                    buttonText = document.createTextNode("X");
+                    // // append text to button
+                    button.appendChild(buttonText)
+                    //     // append button to li
+                    newLi.appendChild(button)
+                    const getList = ulLi.appendChild(newLi)   
+                }
+            }
+        })
+        // .catch(error => console.log(error));
+        // console.log(data)
+    };
+    getTodos();
+    // form.addEventListener('click', addItems)
+
+    //          function addItems(event){
+    //             let LiText = document.createTextNode(todos.title)
+    //             let newList =document.createElement(li)
+    //             newList.appendChild(LiText)
+    //             newList
+    //        
+    // form.addEventListener('click', addItems)
+
+    //          function addItems(e){
+                
+    //          }
+
+    const createTodo = ()=> {
+        const url = "http://localhost:9000";
+    
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify({title: inputData.value}),
+        }
+
+        fetch(url, options)
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data, "new data")
+            // getTodos()
+            // window.location.reload()
+            const postLi = document.createElement('Li')
+            postLi.className="list-group-item"
+            const newbutton= document.createElement('button')
+            newbutton.setAttribute('type', "button")
+            newbutton.className="btn btn-danger btn-sm float-right delete";
+            const textLi = document.createTextNode('item 1')
+            postLi 
+            const DeleteBtnText = document.createTextNode('X')
+            newbutton.appendChild(DeleteBtnText)
+            postLi.appendChild(textLi)
+            postLi.appendChild(newbutton)
+            ulLi.appendChild(postLi)
+        })
     }
-    show(data)
-}
-
-// calling that async function
-getapi(apiUrl);
-
-// function to hide loader
-function hideloader(){
-    document.getElementById('loading').style.display="none"
-}
-
+         
