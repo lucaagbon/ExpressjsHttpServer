@@ -43,15 +43,14 @@ app.post('/', (request, response) => {
     }
   });
 
-  app.delete('/:place', (request, response)=> {
-    const id = request.params.place
+  app.delete('/:id', (request, response)=> {
+    const id = request.params.id
     const deletedTodo = request.body;
-    console.log(deletedTodo, 'deletedTodo')
+ 
     for(let i = 0; i < todos.length; i ++){
       if(todos[i].id === Number(id)){
         todos.splice(i, 1)
-        return response.status(200).json({
-          msg: 'item successfuly removed', todos})
+        return response.status(200).json({msg : `todo ${id} sucessfully deleted`})
       }
     }
 
